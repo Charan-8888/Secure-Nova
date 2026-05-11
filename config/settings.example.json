@@ -1,0 +1,32 @@
+{
+  "scan_paths": [
+    "C:\\Users\\%USERNAME%\\Downloads",
+    "C:\\Users\\%USERNAME%\\Desktop",
+    "C:\\Users\\%USERNAME%\\AppData\\Local\\Temp",
+    "C:\\Users\\%USERNAME%\\AppData\\Roaming"
+  ],
+  "quarantine_path": "C:\\PCGuard\\Quarantine",
+  "virustotal_api_key": "YOUR_VT_API_KEY_HERE",
+  "abuseipdb_api_key": "",
+  "auto_quarantine": true,
+  "auto_kill_process": false,
+  "auto_eject_usb_on_threat": false,
+  "blocklist_refresh_hours": 6,
+  "hash_db_refresh_hours": 24,
+  "whitelist_processes": [
+    "explorer.exe", "svchost.exe", "chrome.exe", "firefox.exe",
+    "msedge.exe", "code.exe", "python.exe", "pythonw.exe",
+    "notepad.exe", "taskmgr.exe", "dwm.exe", "winlogon.exe",
+    "lsass.exe", "services.exe", "SearchIndexer.exe"
+  ],
+  "notifications_enabled": true,
+  "sound_alerts": false,
+  "start_with_windows": false,
+  "log_level": "INFO",
+  "process_poll_interval": 2,
+  "network_poll_interval": 5,
+  "vt_rate_limit_seconds": 15,
+  "vt_malicious_threshold": 3,
+  "sandbox_timeout_seconds": 30,
+  "max_file_size_vt_mb": 32
+}

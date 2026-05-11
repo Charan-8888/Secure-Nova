@@ -1,0 +1,1 @@
+# SecureNova — Python package markers

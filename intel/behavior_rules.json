@@ -1,0 +1,114 @@
+{
+  "lolbins": {
+    "description": "Living Off the Land Binaries — legitimate tools abused by attackers",
+    "binaries": {
+      "certutil.exe": {
+        "suspicious_args": ["-urlcache", "-split", "-decode", "-encode", "-f http"],
+        "severity": "high"
+      },
+      "mshta.exe": {
+        "suspicious_args": ["javascript:", "vbscript:", "http://", "https://"],
+        "severity": "high"
+      },
+      "regsvr32.exe": {
+        "suspicious_args": ["/s /n /u /i:", "scrobj.dll", "http://"],
+        "severity": "high"
+      },
+      "bitsadmin.exe": {
+        "suspicious_args": ["/transfer", "/create", "/addfile", "/SetNotifyCmdLine"],
+        "severity": "high"
+      },
+      "wmic.exe": {
+        "suspicious_args": ["process call create", "os get", "/node:"],
+        "severity": "medium"
+      },
+      "rundll32.exe": {
+        "suspicious_args": ["javascript:", "http://", "shell32.dll,ShellExec_RunDLL"],
+        "severity": "medium"
+      },
+      "cscript.exe": {
+        "suspicious_args": ["//E:jscript", "//E:vbscript", "http://"],
+        "severity": "medium"
+      },
+      "wscript.exe": {
+        "suspicious_args": ["//E:jscript", "//E:vbscript"],
+        "severity": "medium"
+      },
+      "msiexec.exe": {
+        "suspicious_args": ["/q http://", "/q https://", "/q \\\\"],
+        "severity": "medium"
+      },
+      "powershell.exe": {
+        "suspicious_args": ["-EncodedCommand", "-enc ", "-e ", "-ExecutionPolicy Bypass",
+                            "IEX(", "Invoke-Expression", "DownloadString", "DownloadFile",
+                            "-WindowStyle Hidden", "-W Hidden", "-NoProfile -NonI"],
+        "severity": "high"
+      },
+      "cmd.exe": {
+        "suspicious_args": ["/c powershell", "/c certutil", "/c bitsadmin",
+                            "^|", "&&", ">nul 2>&1"],
+        "severity": "low"
+      }
+    }
+  },
+
+  "parent_child_violations": {
+    "description": "Suspicious parent-child process relationships",
+    "rules": [
+      {"parent": "winword.exe",   "child": ["cmd.exe", "powershell.exe", "wscript.exe", "cscript.exe", "mshta.exe"]},
+      {"parent": "excel.exe",     "child": ["cmd.exe", "powershell.exe", "wscript.exe", "cscript.exe"]},
+      {"parent": "outlook.exe",   "child": ["cmd.exe", "powershell.exe", "wscript.exe"]},
+      {"parent": "powerpnt.exe",  "child": ["cmd.exe", "powershell.exe"]},
+      {"parent": "acrobat.exe",   "child": ["cmd.exe", "powershell.exe"]},
+      {"parent": "acrord32.exe",  "child": ["cmd.exe", "powershell.exe"]},
+      {"parent": "iexplore.exe",  "child": ["cmd.exe", "powershell.exe", "wscript.exe"]},
+      {"parent": "svchost.exe",   "child": ["powershell.exe", "mshta.exe"]}
+    ]
+  },
+
+  "suspicious_tlds": {
+    "description": "TLDs commonly associated with malicious infrastructure",
+    "tlds": [".tk", ".ml", ".ga", ".cf", ".gq", ".buzz", ".xyz", ".top",
+             ".work", ".click", ".link", ".info", ".online", ".site",
+             ".club", ".loan", ".racing", ".download", ".win", ".bid",
+             ".stream", ".accountant", ".science", ".cricket", ".party"]
+  },
+
+  "credential_targets": {
+    "description": "Files/paths that indicate credential access attempts",
+    "paths": [
+      "\\windows\\system32\\config\\sam",
+      "\\windows\\system32\\config\\system",
+      "\\windows\\system32\\config\\security",
+      "\\windows\\ntds\\ntds.dit",
+      "\\appdata\\local\\google\\chrome\\user data\\default\\login data",
+      "\\appdata\\roaming\\mozilla\\firefox\\profiles"
+    ],
+    "processes": ["lsass.exe", "winlogon.exe"]
+  },
+
+  "defense_evasion_patterns": {
+    "description": "Commands that disable security features",
+    "patterns": [
+      "Set-MpPreference -DisableRealtimeMonitoring",
+      "Set-MpPreference -DisableIOAVProtection",
+      "Set-MpPreference -DisableBehaviorMonitoring",
+      "netsh advfirewall set allprofiles state off",
+      "sc stop WinDefend",
+      "sc delete WinDefend",
+      "reg add.*DisableAntiSpyware",
+      "wevtutil cl Security",
+      "wevtutil cl System",
+      "vssadmin delete shadows",
+      "bcdedit /set.*recoveryenabled no",
+      "wbadmin delete catalog"
+    ]
+  },
+
+  "mass_modification_thresholds": {
+    "file_count": 50,
+    "window_seconds": 30,
+    "rename_extensions": [".encrypted", ".locked", ".crypto", ".crypt",
+                          ".enc", ".pay", ".ransom", ".evil"]
+  }
+}

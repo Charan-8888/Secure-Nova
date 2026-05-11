@@ -1,0 +1,55 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# Virtual environment
+.venv/
+venv/
+env/
+ENV/
+
+# Database & logs (user data — don't share)
+data/
+logs/
+
+# Quarantine folder (may contain malware samples!)
+quarantine/
+C:/PCGuard/
+
+# Sandbox temp
+C:/SandboxTemp/
+
+# Distribution / build
+dist/
+build/
+*.spec.bak
+*.egg-info/
+*.egg
+
+# PyInstaller output
+*.exe
+*.app
+
+# IDE / editor
+.vscode/
+.idea/
+*.suo
+*.user
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# API keys / secrets — NEVER commit these
+config/settings.json
+
+# YARA rule cache (large, auto-downloaded)
+rules/
+
+# Assets (add back if you include icons)
+# assets/
